@@ -95,14 +95,7 @@ const SCOPED_CONFIG_SECTION_KEYS = new Set<string>([
   ...INFRASTRUCTURE_SECTION_KEYS,
   ...AI_AGENTS_SECTION_KEYS,
 ]);
-const KNOWN_CHANNELS = [
-  { id: "telegram", label: "Telegram" },
-  { id: "discord", label: "Discord" },
-  { id: "slack", label: "Slack" },
-  { id: "whatsapp", label: "WhatsApp" },
-  { id: "signal", label: "Signal" },
-  { id: "imessage", label: "iMessage" },
-] as const;
+const KNOWN_CHANNELS = [{ id: "feishu", label: "Feishu" }] as const;
 
 const BASE_RADII = { sm: 6, md: 10, lg: 14, xl: 20, full: 9999, default: 10 };
 const SYSTEM_INFO_POLL_INTERVAL_MS = 10_000;
@@ -196,7 +189,10 @@ function mcpServerCount(config: unknown): number {
 
 function quickChannels(config: unknown): QuickSettingsChannel[] {
   const configured = asConfigRecord(asConfigRecord(config)?.channels) ?? {};
-  const configuredIds = Object.keys(configured).filter((id) => id.trim().length > 0);
+  const allowlist = new Set<string>(KNOWN_CHANNELS.map(({ id }) => id));
+  const configuredIds = Object.keys(configured).filter(
+    (id) => id.trim().length > 0 && allowlist.has(id),
+  );
   const channelIds =
     configuredIds.length > 0
       ? configuredIds.toSorted((left, right) => left.localeCompare(right))

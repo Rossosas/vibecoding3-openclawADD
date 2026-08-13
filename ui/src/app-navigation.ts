@@ -14,6 +14,7 @@ type NavigationItem = {
 // list and Settings/Docs live in the sidebar footer, so neither is listed here.
 export const SIDEBAR_NAV_ROUTES = [
   "overview",
+  "models",
   "activity",
   "workboard",
   "instances",
@@ -30,10 +31,11 @@ export const SIDEBAR_NAV_ROUTES = [
 
 export type SidebarNavRoute = (typeof SIDEBAR_NAV_ROUTES)[number];
 
-// Sessions are the sidebar's core content; Overview is the only page pinned by
+// Sessions are the sidebar's core content; Overview and Models are pinned by
 // default. Users pin more via the customize menu.
 export const DEFAULT_SIDEBAR_PINNED_ROUTES = [
   "overview",
+  "models",
 ] as const satisfies readonly SidebarNavRoute[];
 
 /**
@@ -80,6 +82,7 @@ const NAVIGATION_ICONS: NavigationItem = {
   agents: "bot",
   activity: "activity",
   overview: "barChart",
+  models: "spark",
   workboard: "kanban",
   worktrees: "folder",
   channels: "link",
@@ -193,6 +196,7 @@ const NAVIGATION_COPY: Record<NavigationRouteId, { titleKey: string; subtitleKey
   debug: { titleKey: "tabs.debug", subtitleKey: "subtitles.debug" },
   logs: { titleKey: "tabs.logs", subtitleKey: "subtitles.logs" },
   dreams: { titleKey: "tabs.dreams", subtitleKey: "subtitles.dreams" },
+  models: { titleKey: "tabs.models", subtitleKey: "subtitles.models" },
   plugin: { titleKey: "tabs.plugin", subtitleKey: "subtitles.plugin" },
 };
 

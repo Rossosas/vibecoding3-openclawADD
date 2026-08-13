@@ -18,6 +18,7 @@ import { t } from "../../i18n/index.ts";
 import { formatRelativeTimestamp } from "../../lib/format.ts";
 import { renderChannelConfigSection } from "./view.config.ts";
 import { renderDiscordCard } from "./view.discord.ts";
+import { renderFeishuCard } from "./view.feishu.ts";
 import { renderGoogleChatCard } from "./view.googlechat.ts";
 import { renderIMessageCard } from "./view.imessage.ts";
 import { renderNostrCard } from "./view.nostr.ts";
@@ -30,8 +31,11 @@ import {
 import { renderSignalCard } from "./view.signal.ts";
 import { renderSlackCard } from "./view.slack.ts";
 import { renderTelegramCard } from "./view.telegram.ts";
-import type { ChannelKey, ChannelsChannelData, ChannelsProps } from "./view.types.ts";
+import type { ChannelKey, ChannelsChannelData, ChannelsProps, FeishuChannelStatus } from "./view.types.ts";
 import { renderWhatsAppCard } from "./view.whatsapp.ts";
+
+/** Local Control UI: only show Feishu on the Channels page. */
+const LOCAL_CHANNELS_UI_ALLOWLIST = ["feishu"] as const;
 
 export function renderChannels(props: ChannelsProps) {
   const channels = props.snapshot?.channels as Record<string, unknown> | null;
@@ -43,6 +47,7 @@ export function renderChannels(props: ChannelsProps) {
   const signal = (channels?.signal ?? null) as SignalStatus | null;
   const imessage = (channels?.imessage ?? null) as IMessageStatus | null;
   const nostr = (channels?.nostr ?? null) as NostrStatus | null;
+  const feishu = (channels?.feishu ?? null) as FeishuChannelStatus | null;
   const channelOrder = resolveChannelOrder(props.snapshot);
   const orderedChannels = channelOrder
     .map((key, index) => ({
@@ -71,6 +76,7 @@ export function renderChannels(props: ChannelsProps) {
           signal,
           imessage,
           nostr,
+          feishu,
           channelAccounts: props.snapshot?.channelAccounts ?? null,
         }),
       )}
@@ -113,18 +119,32 @@ ${props.snapshot ? JSON.stringify(props.snapshot, null, 2) : t("channels.health.
 }
 
 function resolveChannelOrder(snapshot: ChannelsStatusSnapshot | null): ChannelKey[] {
+  let order: ChannelKey[];
   if (snapshot?.channelMeta?.length) {
-    return snapshot.channelMeta.map((entry) => entry.id);
+    order = snapshot.channelMeta.map((entry) => entry.id);
+  } else if (snapshot?.channelOrder?.length) {
+    order = snapshot.channelOrder;
+  } else {
+    order = [...LOCAL_CHANNELS_UI_ALLOWLIST];
   }
-  if (snapshot?.channelOrder?.length) {
-    return snapshot.channelOrder;
+  const allowlist = new Set<string>(LOCAL_CHANNELS_UI_ALLOWLIST);
+  const filtered = order.filter((id) => allowlist.has(id));
+  // Always show Feishu so first-time App ID / Secret setup is possible.
+  if (!filtered.includes("feishu")) {
+    filtered.unshift("feishu");
   }
-  return ["whatsapp", "telegram", "discord", "googlechat", "slack", "signal", "imessage", "nostr"];
+  return filtered;
 }
 
 function renderChannel(key: ChannelKey, props: ChannelsProps, data: ChannelsChannelData) {
   const accountCountLabel = renderChannelAccountCount(key, data.channelAccounts);
   switch (key) {
+    case "feishu":
+      return renderFeishuCard({
+        props,
+        feishu: data.feishu,
+        accountCountLabel,
+      });
     case "whatsapp":
       return renderWhatsAppCard({
         props,

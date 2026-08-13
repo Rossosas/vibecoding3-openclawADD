@@ -50,6 +50,16 @@ export type ChannelsProps = {
   onNostrProfileToggleAdvanced: () => void;
 };
 
+export type FeishuChannelStatus = {
+  configured?: boolean;
+  running?: boolean;
+  connected?: boolean;
+  lastError?: string;
+  lastStartAt?: number | null;
+  lastProbeAt?: number | null;
+  probe?: { ok?: boolean; status?: string | number; error?: string };
+};
+
 export type ChannelsChannelData = {
   whatsapp?: WhatsAppStatus;
   telegram?: TelegramStatus;
@@ -59,5 +69,6 @@ export type ChannelsChannelData = {
   signal?: SignalStatus | null;
   imessage?: IMessageStatus | null;
   nostr?: NostrStatus | null;
+  feishu?: FeishuChannelStatus | null;
   channelAccounts?: Record<string, ChannelAccountSnapshot[]> | null;
 };

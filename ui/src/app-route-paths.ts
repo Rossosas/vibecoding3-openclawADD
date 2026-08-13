@@ -28,6 +28,7 @@ const APP_ROUTE_DEFINITIONS = {
   nodes: { path: "/nodes" },
   plugin: { path: "/plugin" },
   dreams: { path: "/dreaming", aliases: ["/dreams"] },
+  models: { path: "/models" },
 } as const;
 
 export type RouteId = keyof typeof APP_ROUTE_DEFINITIONS;

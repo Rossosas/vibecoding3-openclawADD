@@ -21,6 +21,9 @@ title: "Gateway architecture"
 
   It uses the same port as the Gateway (default `18789`).
 
+For the monorepo module map (which directories own CLI, agents, plugins, UI, and
+apps), see [System architecture](/concepts/system-architecture).
+
 ## Components and flows
 
 ### Gateway (daemon)
@@ -146,6 +149,7 @@ Details: [Gateway protocol](/gateway/protocol), [Pairing](/channels/pairing),
 
 ## Related
 
+- [System architecture](/concepts/system-architecture) — monorepo module map
 - [Agent Loop](/concepts/agent-loop) — detailed agent execution cycle
 - [Gateway Protocol](/gateway/protocol) — WebSocket protocol contract
 - [Queue](/concepts/queue) — command queue and concurrency

@@ -12,6 +12,7 @@ import { page as debugPage } from "./pages/debug/route.ts";
 import { page as dreamsPage } from "./pages/dreams/route.ts";
 import { page as instancesPage } from "./pages/instances/route.ts";
 import { page as logsPage } from "./pages/logs/route.ts";
+import { page as modelsPage } from "./pages/models/route.ts";
 import { page as nodesPage } from "./pages/nodes/route.ts";
 import { page as overviewPage } from "./pages/overview/route.ts";
 import { page as pluginPage } from "./pages/plugin/route.ts";
@@ -55,6 +56,7 @@ const APP_ROUTE_TREE = [
   tasksPage,
   nodesPage,
   dreamsPage,
+  modelsPage,
   pluginPage,
 ] as const;
 

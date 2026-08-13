@@ -315,6 +315,10 @@ import {
   TerminalTextResultSchema,
   type ModelsListParams,
   ModelsListParamsSchema,
+  type ModelsProbeEndpointParams,
+  ModelsProbeEndpointParamsSchema,
+  type ModelsProbeEndpointResult,
+  ModelsProbeEndpointResultSchema,
   type NodeDescribeParams,
   NodeDescribeParamsSchema,
   type NodeEventParams,
@@ -934,6 +938,9 @@ export const validateChannelsLogoutParams = lazyCompile<ChannelsLogoutParams>(
   ChannelsLogoutParamsSchema,
 );
 export const validateModelsListParams = lazyCompile<ModelsListParams>(ModelsListParamsSchema);
+export const validateModelsProbeEndpointParams = lazyCompile<ModelsProbeEndpointParams>(
+  ModelsProbeEndpointParamsSchema,
+);
 export const validateSkillsStatusParams = lazyCompile<SkillsStatusParams>(SkillsStatusParamsSchema);
 export const validateToolsCatalogParams = lazyCompile<ToolsCatalogParams>(ToolsCatalogParamsSchema);
 export const validateToolsEffectiveParams = lazyCompile<ToolsEffectiveParams>(
@@ -1336,6 +1343,8 @@ export {
   PluginsUiDescriptorsParamsSchema,
   PluginsUiDescriptorsResultSchema,
   ModelsListParamsSchema,
+  ModelsProbeEndpointParamsSchema,
+  ModelsProbeEndpointResultSchema,
   SkillsStatusParamsSchema,
   ToolsCatalogParamsSchema,
   ToolsEffectiveParamsSchema,
@@ -1554,6 +1563,8 @@ export type {
   CommandEntry,
   PluginsSessionActionParams,
   PluginsSessionActionResult,
+  ModelsProbeEndpointParams,
+  ModelsProbeEndpointResult,
   SkillsStatusParams,
   ToolsCatalogParams,
   ToolsCatalogResult,

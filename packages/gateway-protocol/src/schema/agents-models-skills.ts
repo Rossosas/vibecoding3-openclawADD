@@ -255,6 +255,32 @@ export const ModelsListResultSchema = Type.Object(
   { additionalProperties: false },
 );
 
+/**
+ * Live OpenAI-compatible endpoint probe used by Control UI model setup.
+ * Accepts a plaintext apiKey for the probe, or a providerId to reuse a
+ * plaintext models.providers.<id>.apiKey already stored in config.
+ */
+export const ModelsProbeEndpointParamsSchema = Type.Object(
+  {
+    baseUrl: NonEmptyString,
+    modelId: NonEmptyString,
+    apiKey: Type.Optional(Type.String()),
+    providerId: Type.Optional(NonEmptyString),
+  },
+  { additionalProperties: false },
+);
+
+/** Live endpoint probe result. */
+export const ModelsProbeEndpointResultSchema = Type.Object(
+  {
+    ok: Type.Boolean(),
+    latencyMs: Type.Integer({ minimum: 0 }),
+    status: Type.Optional(Type.Integer()),
+    error: Type.Optional(Type.String()),
+  },
+  { additionalProperties: false },
+);
+
 /** Reads installed skill status, optionally for a selected agent. */
 export const SkillsStatusParamsSchema = Type.Object(
   {

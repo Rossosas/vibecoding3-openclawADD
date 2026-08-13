@@ -55,6 +55,7 @@ describe("navigationIconForRoute", () => {
     ).toEqual({
       chat: "messageSquare",
       overview: "barChart",
+      models: "spark",
       activity: "activity",
       workboard: "kanban",
       worktrees: "folder",
@@ -95,6 +96,7 @@ describe("titleForRoute", () => {
     ).toEqual({
       chat: "Chat",
       overview: "Overview",
+      models: "Models",
       activity: "Activity",
       workboard: "Workboard",
       worktrees: "Worktrees",
@@ -129,6 +131,7 @@ describe("subtitleForRoute", () => {
     ).toEqual({
       chat: "Gateway chat for quick interventions.",
       overview: "Status, entry points, health.",
+      models: "Add OpenAI-compatible providers with model name and base URL.",
       activity: "Browser-local tool activity summaries.",
       workboard: "Agent work queue and session handoff.",
       worktrees: "Isolated agent task checkouts and recovery snapshots.",
@@ -218,6 +221,7 @@ describe("routeIdFromPath", () => {
     expect(routeIdFromPath("/logs")).toBe("logs");
     expect(routeIdFromPath("/dreaming")).toBe("dreams");
     expect(routeIdFromPath("/dreams")).toBe("dreams");
+    expect(routeIdFromPath("/models")).toBe("models");
   });
 
   it("leaves root fallback to application startup", () => {
